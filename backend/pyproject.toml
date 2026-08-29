@@ -1,6 +1,6 @@
 [project]
 name = "vilao-backend"
-version = "0.2.0"
+version = "0.3.0"
 description = "O Vilao — API FastAPI (motor de curadoria, validacao simbolica e pontuacao)"
 requires-python = ">=3.11"
 dependencies = [

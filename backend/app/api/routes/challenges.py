@@ -10,6 +10,9 @@ from app.api.schemas import (
 from app.db.base import get_db_session
 from app.db.models import RiddleTheme
 from app.services import challenge_service, ranking_service
+from app.ai.deps import get_provider
+from app.ai.pipeline import RiddleGenerationError, generate_and_ingest
+from app.ai.provider import LLMProvider
 from sqlalchemy import select
 
 router = APIRouter(prefix="/challenges", tags=["desafio"])
@@ -17,14 +20,35 @@ router = APIRouter(prefix="/challenges", tags=["desafio"])
 
 @router.post("", response_model=ChallengeCreateResponse, status_code=201)
 async def create_challenge(
-    req: ChallengeCreateRequest, db: AsyncSession = Depends(get_db_session),
+    req: ChallengeCreateRequest,
+    db: AsyncSession = Depends(get_db_session),
+    provider: LLMProvider = Depends(get_provider),
 ) -> ChallengeCreateResponse:
     try:
-        created = await challenge_service.create_challenge(
-            db, uuid.UUID(req.creator_user_id), uuid.UUID(req.theme_id), req.difficulty, req.provocation,
-        )
+        theme_id = uuid.UUID(req.theme_id)
+        creator_id = uuid.UUID(req.creator_user_id)
     except ValueError as exc:
         raise HTTPException(422, f"Identificador invalido: {exc}") from exc
+
+    forged = None
+    if req.generate:
+        # Forja um enigma novo via pipeline de IA (FR-002) e vincula ao desafio.
+        theme = (await db.execute(
+            select(RiddleTheme).where(RiddleTheme.theme_id == theme_id)
+        )).scalars().first()
+        if theme is None:
+            raise HTTPException(404, "Tema nao encontrado.")
+        try:
+            forged, _report = await generate_and_ingest(
+                db, provider, theme_id=theme_id, theme_title=theme.title,
+                difficulty=req.difficulty, category=req.category,
+            )
+        except RiddleGenerationError as exc:
+            raise HTTPException(422, str(exc)) from exc
+
+    created = await challenge_service.create_challenge(
+        db, creator_id, theme_id, req.difficulty, req.provocation, riddle=forged,
+    )
     if created is None:
         raise HTTPException(404, "Nenhum enigma homologado para este tema e dificuldade.")
     challenge, _riddle = created

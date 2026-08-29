@@ -35,6 +35,8 @@ class ChallengeCreateRequest(BaseModel):
     theme_id: str
     difficulty: int = Field(ge=1, le=5)
     provocation: str | None = Field(default=None, max_length=280)
+    generate: bool = False   # se True, forja um enigma novo via pipeline de IA
+    category: str | None = None
 
 
 class ChallengeCreateResponse(BaseModel):
@@ -104,3 +106,20 @@ class RankingRow(BaseModel):
     accumulated_score: int
     challenges_completed: int
     genius_awards_count: int
+
+
+# ---- Geração de enigmas (pipeline de IA) ----
+class GenerateRiddleRequest(BaseModel):
+    theme_id: str
+    difficulty: int = Field(ge=1, le=5)
+    category: str | None = None
+    seed: int | None = None
+
+
+class GenerateRiddleResponse(BaseModel):
+    riddle_id: str
+    theme_id: str
+    difficulty_level: int
+    provider: str
+    attempts: int
+    approved: bool

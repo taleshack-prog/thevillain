@@ -60,7 +60,7 @@ pytest                                             # testes (scoring + validador
 - **P0 (dias 1–5):** core loop nas 4 telas mobile + endpoints FastAPI.
   - ✅ Fatia 0 — fundação (motores, schema, design system, infra)
   - ✅ Fatia 1 — persistência (SQLAlchemy 2.0 async + Alembic) + API do core loop
-  - ⬜ Fatia 2 — pipeline de IA (Ollama, 5 estágios)
+  - ✅ Fatia 2 — pipeline de IA (5 estágios; Mock + Ollama plugável)
   - ⬜ Fatia 3 — mobile Expo (4 telas 9:16)
   - ⬜ Fatia 4 — web Next.js (telas PC 16:9)
 - **P1 (dias 6–10):** telemetria (FR-011) + particionamento PostgreSQL 16.

@@ -7,7 +7,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import get_settings
 from app.core.redis import close_redis
 from app.db.base import dispose_engine
-from app.api.routes import health, scoring, riddles, themes, challenges, attempts
+from app.api.routes import (
+    health, scoring, riddles, themes, challenges, attempts, generation,
+)
 
 settings = get_settings()
 
@@ -21,7 +23,7 @@ async def lifespan(_app: FastAPI):
 
 app = FastAPI(
     title=settings.app_name,
-    version="0.2.0",
+    version="0.3.0",
     description="Core loop assincrono de O Vilao: curadoria, convite, decifracao e ranking.",
     lifespan=lifespan,
 )
@@ -35,7 +37,8 @@ app.add_middleware(
 )
 
 _p = settings.api_v1_prefix
-for r in (health.router, scoring.router, riddles.router, themes.router, challenges.router, attempts.router):
+for r in (health.router, scoring.router, riddles.router, themes.router,
+          challenges.router, attempts.router, generation.router):
     app.include_router(r, prefix=_p)
 
 

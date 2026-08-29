@@ -34,6 +34,8 @@ class Settings(BaseSettings):
     # Inferencia IA
     ollama_base_url: str = "http://localhost:11434"
     ollama_model: str = "mistral:7b-instruct-q4_0"
+    ollama_timeout: float = 120.0
+    llm_provider: str = "mock"  # "mock" | "ollama"
 
     cors_origins: str = "http://localhost:3000,http://localhost:19006"
 

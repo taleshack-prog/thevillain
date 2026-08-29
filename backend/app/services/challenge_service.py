@@ -39,8 +39,11 @@ async def create_challenge(
     theme_id: uuid.UUID,
     difficulty: int,
     provocation: str | None,
+    riddle: RiddleTemplate | None = None,
 ) -> tuple[Challenge, RiddleTemplate] | None:
-    riddle = await pick_riddle(db, theme_id, difficulty)
+    # Se um enigma especifico nao foi vinculado, seleciona um homologado do pool.
+    if riddle is None:
+        riddle = await pick_riddle(db, theme_id, difficulty)
     if riddle is None:
         return None
     challenge = Challenge(
