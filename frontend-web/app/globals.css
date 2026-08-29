@@ -1,0 +1,34 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Inter:wght@400;500;600&family=Roboto+Mono:wght@400;500&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --vil-carvao-profundo: #1A1A1A;
+  --vil-carvao-escuro: #121212;
+  --vil-roxo-neon: #8B5CF6;
+  --vil-verde-neon: #39FF14;
+  --vil-dourado: #D4AF37;
+}
+
+html, body { height: 100%; }
+body {
+  background:
+    radial-gradient(1200px 600px at 50% -10%, rgba(61,31,110,0.25), transparent 60%),
+    var(--vil-carvao-profundo);
+  color: #F5F5F5;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+/* Iluminacao chiaroscuro: vinheta escura nas bordas */
+.chiaroscuro::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  box-shadow: inset 0 0 140px 40px rgba(0,0,0,0.75);
+  border-radius: inherit;
+}
+
+/* Runas do progresso (divisores angulares do cajado) */
+.rune-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(139,92,246,0.6), transparent);
+}
