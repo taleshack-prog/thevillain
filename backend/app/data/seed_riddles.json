@@ -1,0 +1,82 @@
+{
+  "themes": [
+    {
+      "slug": "mansao-vitoriana",
+      "title": "Misterios da Mansao Vitoriana",
+      "description": "Crimes e enigmas logico-dedutivos nos saloes de uma mansao gotica.",
+      "accent_color": "#8B5CF6",
+      "is_philosophical": false
+    },
+    {
+      "slug": "criptas-dos-cruzados",
+      "title": "Criptas dos Cruzados",
+      "description": "Logica proposicional e inscricoes enganosas em tumbas ancestrais.",
+      "accent_color": "#6A3FA0",
+      "is_philosophical": false
+    }
+  ],
+  "riddles": [
+    {
+      "theme_slug": "mansao-vitoriana",
+      "difficulty_level": 2,
+      "scenario": "Na biblioteca da mansao de Blackwood, o pendulo parou no instante do crime. A governanta jura que o relogio adianta 10 minutos a cada hora cheia.",
+      "riddle": "O relogio foi acertado ao meio-dia e agora marca 15h30. Qual era a hora real exata do crime?",
+      "correct_answer": "15:00",
+      "distractors": [
+        "14:55",
+        "15:15",
+        "15:20"
+      ],
+      "deduction_steps": [
+        "Razao de velocidade: 70 min de mostrador para cada 60 min reais (7/6).",
+        "Do meio-dia ate 15h30 o mostrador avancou 210 minutos.",
+        "Tempo real = 210 x (6/7) = 180 min. Logo, 12:00 + 3h = 15:00."
+      ],
+      "clues": [
+        {
+          "tier": 1,
+          "text": "O relogio corre mais rapido que a realidade; o crime foi antes das 15h30 reais."
+        },
+        {
+          "tier": 2,
+          "text": "Para cada 7 minutos que os ponteiros avancam, apenas 6 minutos reais transcorrem."
+        },
+        {
+          "tier": 3,
+          "text": "3h30 de mostrador equivalem a 210 min acelerados. Divida pela proporcao 7/6."
+        }
+      ]
+    },
+    {
+      "theme_slug": "criptas-dos-cruzados",
+      "difficulty_level": 3,
+      "scenario": "Diante do tumulo do Grao-Mestre repousam tres baus de alabastro: Ouro, Ferro e Ebano. O testamento adverte: no maximo uma das tres inscricoes diz a verdade.",
+      "riddle": "Ouro diz 'a chave nao esta no Ferro'; Ferro diz 'a chave nao esta neste bau'; Ebano diz 'a chave esta neste bau'. Onde esta a chave?",
+      "correct_answer": "Bau de Ferro",
+      "distractors": [
+        "Bau de Ouro",
+        "Bau de Ebano",
+        "Nenhum dos baus"
+      ],
+      "deduction_steps": [
+        "Regra mestra: no maximo uma verdade; pelo menos duas inscricoes sao falsas.",
+        "Se a chave esta no Ferro, as tres inscricoes ficam falsas (0 verdades <= 1): valido.",
+        "Ouro ou Ebano tornariam Ouro e Ferro verdadeiras ao mesmo tempo: viola a regra."
+      ],
+      "clues": [
+        {
+          "tier": 1,
+          "text": "Se duas inscricoes concordam num cenario, ele so vale se ambas forem falsas."
+        },
+        {
+          "tier": 2,
+          "text": "Com a chave no Ouro ou no Ebano, as frases de Ouro e Ferro ficam verdadeiras juntas."
+        },
+        {
+          "tier": 3,
+          "text": "Ache o local onde as tres frases sao mentira: e a unica saida sem violar a regra."
+        }
+      ]
+    }
+  ]
+}

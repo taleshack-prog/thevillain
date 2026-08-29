@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Node / Next / Expo
+node_modules/
+.next/
+out/
+.expo/
+dist/
+*.tsbuildinfo
+
+# Ambiente e segredos
+.env
+.env.*
+!.env.example
+
+# Banco / dumps
+*.sql.bak
+*.dump
+
+# Assets fonte pesados (versionar via LFS)
+assets/00_source_files/**/*.psd
+assets/00_source_files/**/*.blend
+assets/00_source_files/**/*.fig
+
+# SO / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json

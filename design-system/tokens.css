@@ -1,0 +1,31 @@
+/* O Vilao — Design Tokens (SSoT Rev. 3.0). Fonte: docs/. Nao editar sem homologacao. */
+:root {
+  /* Carvao / superficies (60%) */
+  --vil-carvao-profundo: #1A1A1A;
+  --vil-carvao-escuro:   #121212;
+  --vil-carvao-medio:    #2A2A2A;
+  /* Vilao — roxo */
+  --vil-roxo-real:       #6A3FA0;
+  --vil-roxo-profundo:   #3D1F6E;
+  --vil-roxo-neon:       #8B5CF6;
+  /* Heroi — verde */
+  --vil-verde-esmeralda: #22C55E;
+  --vil-verde-neon:      #39FF14;
+  /* Prestigio — dourado (10% acentos) */
+  --vil-dourado-primario:#D4AF37;
+  --vil-dourado-claro:   #F0D98C;
+  /* Texto */
+  --vil-texto-primario:  #F5F5F5;
+  --vil-texto-secundario:#9E9E9E;
+  /* Feedback */
+  --vil-sucesso:         #27AE60;
+  --vil-erro:            #C0392B;
+
+  /* Tipografia */
+  --vil-font-display: "Cinzel", serif;
+  --vil-font-body:    "Inter", system-ui, sans-serif;
+  --vil-font-mono:    "Roboto Mono", ui-monospace, monospace;
+
+  /* Ergonomia */
+  --vil-touch-target: 44px;
+}
