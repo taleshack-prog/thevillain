@@ -3,6 +3,7 @@ from __future__ import annotations
 from pydantic import BaseModel, Field
 
 
+# ---- Temas ----
 class ThemeOut(BaseModel):
     theme_id: str
     slug: str
@@ -12,25 +13,7 @@ class ThemeOut(BaseModel):
     is_philosophical: bool
 
 
-class OptionOut(BaseModel):
-    """Opcao de resposta entregue ao cliente: apenas id efemero + texto (sem gabarito)."""
-    option_id: str  # embaralhado/nonce; correto so e conhecido no servidor
-    text: str
-
-
-class RiddlePublicOut(BaseModel):
-    """Payload de gameplay — SEM correct_answer, SEM symbolic_hash."""
-    riddle_id: str
-    theme: str
-    difficulty_level: int = Field(ge=1, le=5)
-    scenario_context: str
-    riddle_text: str
-    options: list[OptionOut]
-    total_time_seconds: float
-    session_signature: str
-    nonce: str
-
-
+# ---- Pontuacao (preview) ----
 class ScoreRequest(BaseModel):
     difficulty: int = Field(ge=1, le=5)
     time_spent: float = Field(ge=0)
@@ -44,3 +27,80 @@ class ScoreResponse(BaseModel):
     genius_multiplier: float
     is_genius: bool
     final_score: int
+
+
+# ---- Curadoria / Convite ----
+class ChallengeCreateRequest(BaseModel):
+    creator_user_id: str
+    theme_id: str
+    difficulty: int = Field(ge=1, le=5)
+    provocation: str | None = Field(default=None, max_length=280)
+
+
+class ChallengeCreateResponse(BaseModel):
+    challenge_id: str
+    share_token: str
+    share_path: str
+    expires_at: str
+
+
+class ChallengePublicOut(BaseModel):
+    """Preview publico do convite — SEM enigma e SEM gabarito."""
+    challenge_id: str
+    share_token: str
+    theme_title: str
+    accent_color: str
+    difficulty_level: int
+    custom_provocation: str | None
+    expires_at: str
+
+
+# ---- Decifracao ----
+class OptionOut(BaseModel):
+    option_id: str   # id opaco (HMAC) — nao indica corretude
+    text: str
+
+
+class AttemptStartRequest(BaseModel):
+    solver_user_id: str
+
+
+class AttemptStartResponse(BaseModel):
+    attempt_id: str
+    riddle_id: str
+    difficulty_level: int
+    scenario_context: str
+    riddle_text: str
+    options: list[OptionOut]
+    total_time_seconds: float
+    session_signature: str
+    nonce: str
+    started_at: str
+
+
+class ClueOut(BaseModel):
+    tier: int
+    clue_text: str
+    score_penalty_percent: float
+
+
+class SubmitRequest(BaseModel):
+    chosen_option_id: str
+
+
+class SubmitResponse(BaseModel):
+    is_correct: bool
+    quarantined: bool
+    time_spent_seconds: float
+    score: ScoreResponse
+    correct_answer: str | None
+    deduction_steps: list[str]
+
+
+# ---- Ranking ----
+class RankingRow(BaseModel):
+    rank_position: int
+    user_id: str
+    accumulated_score: int
+    challenges_completed: int
+    genius_awards_count: int

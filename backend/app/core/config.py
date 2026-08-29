@@ -1,10 +1,21 @@
-"""Configuracao central (pydantic-settings). Le variaveis de .env."""
+"""Configuracao central (pydantic-settings).
+
+Carrega o `.env` da RAIZ do repositorio de forma absoluta, para funcionar
+independentemente do diretorio de trabalho (ex.: rodar alembic/uvicorn de
+dentro de `backend/`). Variaveis de ambiente do shell tem prioridade sobre o .env.
+"""
 from functools import lru_cache
+from pathlib import Path
+
 from pydantic_settings import BaseSettings, SettingsConfigDict
+
+# backend/app/core/config.py -> parents: [0]=core [1]=app [2]=backend [3]=raiz
+_REPO_ROOT = Path(__file__).resolve().parents[3]
+_ENV_FILES = (str(_REPO_ROOT / ".env"), ".env")  # raiz + fallback local (CWD)
 
 
 class Settings(BaseSettings):
-    model_config = SettingsConfigDict(env_file=".env", extra="ignore")
+    model_config = SettingsConfigDict(env_file=_ENV_FILES, extra="ignore")
 
     app_env: str = "development"
     app_name: str = "O Vilao API"

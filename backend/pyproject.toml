@@ -1,6 +1,6 @@
 [project]
 name = "vilao-backend"
-version = "0.1.0"
+version = "0.2.0"
 description = "O Vilao — API FastAPI (motor de curadoria, validacao simbolica e pontuacao)"
 requires-python = ">=3.11"
 dependencies = [
@@ -21,9 +21,13 @@ dependencies = [
 [project.optional-dependencies]
 dev = ["pytest>=8.2", "pytest-asyncio>=0.23", "ruff>=0.5", "mypy>=1.10", "locust>=2.29"]
 
+[tool.setuptools]
+packages = ["app"]
+
 [tool.pytest.ini_options]
 pythonpath = ["."]
 asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
 testpaths = ["tests"]
 
 [tool.ruff]
